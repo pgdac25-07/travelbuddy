@@ -1,6 +1,6 @@
 // components/Home.js   (or HomePage.js – whatever name you use)
 import { Link } from 'react-router-dom';          // ← add this import
-import NavbarComponent from './NavbarComponent'; // adjust path if needed
+
 
 function Home() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <>
-      <NavbarComponent />
+      
 
       <div style={styles.container}>
         <h1 style={styles.title}>

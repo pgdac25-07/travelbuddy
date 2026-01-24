@@ -29,6 +29,7 @@ function NavbarComponent() {
           </>
         ) : (
           <>
+          <Link to="/" style={styles.link}>Home</Link>
             <Link to="/login" style={styles.link}>Login</Link>
             <Link to="/register" style={styles.link}>Register</Link>
           </>
