@@ -31,3 +31,18 @@ build/
 
 ### VS Code ###
 .vscode/
+# Eclipse / IDE junk
+.metadata/
+*.log
+*.lock
+*.cache
+
+# VS Code
+.vscode/
+
+# Workspace files
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
