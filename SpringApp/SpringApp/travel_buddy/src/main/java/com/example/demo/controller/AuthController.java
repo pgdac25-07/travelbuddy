@@ -8,6 +8,8 @@ import com.example.demo.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,29 +46,38 @@ public class AuthController {
 
     // 🔹 LOGIN
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<?> login(
             @RequestBody LoginRequest req,
             HttpServletRequest request) {
 
         Users user = userRepository.findByUsername(req.getUsername())
                 .orElse(null);
 
+        // ❌ invalid username
         if (user == null) {
-            return ResponseEntity.status(401).body("User not found");
+            return ResponseEntity.ok(
+                    Map.of("message", "invalid login")
+            );
         }
 
+        // ❌ invalid password
         if (!user.getPassword().equals(req.getPassword())) {
-            return ResponseEntity.status(401).body("Invalid password");
+            return ResponseEntity.ok(
+                    Map.of("message", "invalid login")
+            );
         }
 
-        // Create session
+        // ✅ create session
         HttpSession session = request.getSession(true);
         session.setAttribute("USER_ID", user.getUserId());
         session.setAttribute("ROLE_ID", user.getRoleId());
         session.setAttribute("USERNAME", user.getUsername());
 
-        return ResponseEntity.ok("Login successful");
+        // ✅ success → send full user JSON
+        return ResponseEntity.ok(user);
     }
+
+
 
     // 🔹 LOGOUT
     @PostMapping("/logout")

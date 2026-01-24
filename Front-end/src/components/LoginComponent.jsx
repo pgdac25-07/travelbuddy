@@ -3,16 +3,16 @@ import { useState } from "react";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");      // success or error message
+  // const [message, setMessage] = useState("");      // success or error message
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setMessage("");
+    // setMessage("");
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/login", {
+      const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,14 +24,15 @@ function Login() {
       });
 
       const data = await response.json();   // assuming backend returns JSON
-
-      if (!response.ok) {
-        // Example: backend sends { "message": "Invalid username or password" }
-        throw new Error(data.message || "Login failed");
-      }
+      console.log(data);
+      
+      // if (!response.ok) {
+      //   // Example: backend sends { "message": "Invalid username or password" }
+      //   throw new Error(data.message || "Login failed");
+      // }
 
       // ─── SUCCESS CASE ───────────────────────────────────────
-      setMessage("Login successful! Welcome back.");
+      // setMessage("Login successful! Welcome back.");
       
       // Very simple way to remember user is logged in (optional)
       localStorage.setItem("isLoggedIn", "true");
@@ -42,7 +43,9 @@ function Login() {
       // alert("Login successful!");
 
     } catch (err) {
-      setMessage(err.message || "Something went wrong. Try again.");
+      // setMessage(err.message || "Something went wrong. Try again.");
+      console.log(err);
+      
     } finally {
       setLoading(false);
     }
@@ -54,16 +57,7 @@ function Login() {
         <h2 style={styles.title}>Travel Buddy</h2>
         <p style={styles.subtitle}>Login to continue</p>
 
-        {message && (
-          <div
-            style={{
-              ...styles.message,
-              color: message.includes("success") ? "green" : "red",
-            }}
-          >
-            {message}
-          </div>
-        )}
+        
 
         <form onSubmit={handleLogin}>
           <input
