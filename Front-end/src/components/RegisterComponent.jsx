@@ -12,33 +12,30 @@ function Register() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
 
-  // ✅ REGEX RULES
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[0-9]{10}$/;
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const validate = () => {
     let err = {};
 
-    if (!formData.firstName) err.firstName = "Enter first name";
-    if (!formData.lastName) err.lastName = "Enter last name";
+    if (!formData.firstName.trim()) err.firstName = "Enter first name";
+    if (!formData.lastName.trim()) err.lastName = "Enter last name";
     if (!formData.gender) err.gender = "Select gender";
 
-    if (!emailRegex.test(formData.email))
-      err.email = "Enter valid email (example@gmail.com)";
+    if (!formData.email.trim() || !emailRegex.test(formData.email))
+      err.email = "Enter valid email";
 
-    if (!phoneRegex.test(formData.phone))
-      err.phone = "Phone number must be 10 digits";
+    if (!formData.phone || !phoneRegex.test(formData.phone))
+      err.phone = "Phone must be exactly 10 digits";
 
-    if (!passwordRegex.test(formData.password))
+    if (!formData.password || !passwordRegex.test(formData.password))
       err.password =
-        "Password must contain A, a, 1, special char & min 8 chars";
+        "Password must contain uppercase, lowercase, number, special char & ≥8 chars";
 
     if (!formData.role) err.role = "Select role";
 
@@ -46,11 +43,49 @@ function Register() {
     return Object.keys(err).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setServerError("");
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      console.log("Registered User:", formData);
-      alert("Registration Successful ✅");
+    setServerError("");
+    if (!validate()) return;
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8080/authister", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      console.log("Registered successfully:", data);
+      alert("Registration Successful! ✅");
+
+      setFormData({
+        firstName: "", lastName: "", gender: "", email: "",
+        phone: "", password: "", role: "",
+      });
+
+      // Optional: redirect after success
+      // window.location.href = "/login";
+
+    } catch (err) {
+      console.error(err);
+      setServerError(err.message || "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,10 +94,17 @@ function Register() {
       <div style={styles.card}>
         <h2 style={styles.title}>Register</h2>
 
+        {serverError && (
+          <div style={{ color: "red", marginBottom: 12, textAlign: "center" }}>
+            {serverError}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             name="firstName"
-            placeholder="First Name (e.g. Vaishnavi)"
+            placeholder="First Name"
+            value={formData.firstName}
             onChange={handleChange}
             style={styles.input}
           />
@@ -70,7 +112,8 @@ function Register() {
 
           <input
             name="lastName"
-            placeholder="Last Name (e.g. Kale)"
+            placeholder="Last Name"
+            value={formData.lastName}
             onChange={handleChange}
             style={styles.input}
           />
@@ -78,19 +121,21 @@ function Register() {
 
           <select
             name="gender"
+            value={formData.gender}
             onChange={handleChange}
             style={styles.input}
           >
             <option value="">Select Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
           <span style={styles.error}>{errors.gender}</span>
 
           <input
             name="email"
-            placeholder="Email (e.g. user@gmail.com)"
+            placeholder="Email"
+            value={formData.email}
             onChange={handleChange}
             style={styles.input}
           />
@@ -98,7 +143,8 @@ function Register() {
 
           <input
             name="phone"
-            placeholder="Phone No (10 digits only)"
+            placeholder="Phone (10 digits)"
+            value={formData.phone}
             onChange={handleChange}
             style={styles.input}
           />
@@ -107,7 +153,8 @@ function Register() {
           <input
             type="password"
             name="password"
-            placeholder="Password (Strong password)"
+            placeholder="Password"
+            value={formData.password}
             onChange={handleChange}
             style={styles.input}
           />
@@ -115,6 +162,7 @@ function Register() {
 
           <select
             name="role"
+            value={formData.role}
             onChange={handleChange}
             style={styles.input}
           >
@@ -124,8 +172,15 @@ function Register() {
           </select>
           <span style={styles.error}>{errors.role}</span>
 
-          <button type="submit" style={styles.button}>
-            Register
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              ...styles.button,
+              background: loading ? "#666" : styles.button.background,
+            }}
+          >
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
       </div>
@@ -133,9 +188,6 @@ function Register() {
   );
 }
 
-export default Register;
-
-//style
 const styles = {
   container: {
     height: "100vh",
@@ -162,11 +214,12 @@ const styles = {
     marginBottom: "6px",
     borderRadius: "6px",
     border: "1px solid #ccc",
+    fontSize: "16px",
   },
   button: {
     width: "100%",
     padding: "12px",
-    background: "#09547c",
+    background: "#09547c",          // ← this exists now
     color: "#fff",
     border: "none",
     borderRadius: "6px",
@@ -182,4 +235,4 @@ const styles = {
   },
 };
 
-
+export default Register;
