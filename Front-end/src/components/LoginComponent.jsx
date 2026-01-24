@@ -3,10 +3,49 @@ import { useState } from "react";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");      // success or error message
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(username, password);
+    setMessage("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username.trim(),
+          password: password,
+        }),
+      });
+
+      const data = await response.json();   // assuming backend returns JSON
+
+      if (!response.ok) {
+        // Example: backend sends { "message": "Invalid username or password" }
+        throw new Error(data.message || "Login failed");
+      }
+
+      // ─── SUCCESS CASE ───────────────────────────────────────
+      setMessage("Login successful! Welcome back.");
+      
+      // Very simple way to remember user is logged in (optional)
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("username", username.trim());  // optional
+
+      // You can redirect here
+      // window.location.href = "/home";   // or use react-router navigate
+      // alert("Login successful!");
+
+    } catch (err) {
+      setMessage(err.message || "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -14,6 +53,17 @@ function Login() {
       <div style={styles.card}>
         <h2 style={styles.title}>Travel Buddy</h2>
         <p style={styles.subtitle}>Login to continue</p>
+
+        {message && (
+          <div
+            style={{
+              ...styles.message,
+              color: message.includes("success") ? "green" : "red",
+            }}
+          >
+            {message}
+          </div>
+        )}
 
         <form onSubmit={handleLogin}>
           <input
@@ -23,6 +73,7 @@ function Login() {
             onChange={(e) => setUsername(e.target.value)}
             style={styles.input}
             required
+            disabled={loading}
           />
 
           <input
@@ -32,10 +83,19 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             style={styles.input}
             required
+            disabled={loading}
           />
 
-          <button type="submit" style={styles.button}>
-            Login
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              ...styles.button,
+              opacity: loading ? 0.6 : 1,
+              cursor: loading ? "not-allowed" : "pointer",
+            }}
+          >
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>
@@ -59,10 +119,22 @@ const styles = {
     boxShadow: "0 0 10px rgba(112, 35, 104, 0.2)",
     textAlign: "center",
   },
+  title: {
+    margin: "0 0 8px 0",
+    color: "#3a0b40",
+  },
+  subtitle: {
+    margin: "0 0 24px 0",
+    color: "#555",
+    fontSize: "14px",
+  },
   input: {
     width: "100%",
     padding: "10px",
     marginBottom: "15px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    fontSize: "14px",
   },
   button: {
     width: "100%",
@@ -70,6 +142,13 @@ const styles = {
     background: "#3a0b40",
     color: "#d3edf0",
     border: "none",
+    borderRadius: "5px",
+    fontWeight: "bold",
+    cursor: "pointer",
+  },
+  message: {
+    marginBottom: "16px",
+    fontSize: "14px",
   },
 };
 
