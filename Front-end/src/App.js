@@ -21,6 +21,17 @@ function App() {
             <Route path="/login"     element={<Login />} />
             <Route path="/register"  element={<Register />} />
 
+            <Route
+     path="/customer"
+     element={<h1 style={{ textAlign: "center" }}>Customer Dashboard</h1>}
+      />
+
+      <Route
+       path="/company"
+      element={<h1 style={{ textAlign: "center" }}>Travel Company Dashboard</h1>}
+      />
+
+
             {/* 404 page */}
             <Route
               path="*"

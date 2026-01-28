@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // const [message, setMessage] = useState("");      // success or error message
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,25 +27,22 @@ function Login() {
 
       const data = await response.json();   // assuming backend returns JSON
       console.log(data);
-      
-      // if (!response.ok) {
-      //   // Example: backend sends { "message": "Invalid username or password" }
-      //   throw new Error(data.message || "Login failed");
-      // }
+      localStorage.setItem("role", data.role);
 
-      // ─── SUCCESS CASE ───────────────────────────────────────
-      // setMessage("Login successful! Welcome back.");
-      
-      // Very simple way to remember user is logged in (optional)
+    if (data.role === "CUSTOMER") {
+      navigate("/customer");
+    } else if (data.role === "TRAVEL_COMPANY") {
+      navigate("/company");
+    } else {
+     alert("Unknown role");
+    }
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("username", username.trim());  // optional
 
-      // You can redirect here
-      // window.location.href = "/home";   // or use react-router navigate
-      // alert("Login successful!");
+      
 
     } catch (err) {
-      // setMessage(err.message || "Something went wrong. Try again.");
+      
       console.log(err);
       
     } finally {

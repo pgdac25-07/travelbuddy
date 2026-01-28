@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.RegisterRequest;
+import com.example.demo.entity.Roles;
 import com.example.demo.entity.Users;
+import com.example.demo.repository.RolesRepository;
 import com.example.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +24,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RolesRepository roleRepository;
 
     // 🔹 REGISTER
     @PostMapping("/register")
@@ -72,9 +78,17 @@ public class AuthController {
         session.setAttribute("USER_ID", user.getUserId());
         session.setAttribute("ROLE_ID", user.getRoleId());
         session.setAttribute("USERNAME", user.getUsername());
+        
+     // ✅ ROLE JOIN
+        Roles role = roleRepository
+                .findById(user.getRoleId())
+                .orElse(null);
 
-        // ✅ success → send full user JSON
-        return ResponseEntity.ok(user);
+        String roleName = role != null ? role.getRname() : null;
+
+        // ✅ RETURN USER + ROLE
+        LoginResponse response = new LoginResponse(user, roleName);
+        return ResponseEntity.ok(response);
     }
 
 
