@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../wpt"
+		},
+		{
+			"path": "../../wpt/DemoExam"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "DemoExam"
+	}
+}

@@ -1,1 +1,11 @@
-/SpringApp/.metadata
+# Eclipse / IDE files
+.metadata/
+.project
+.classpath
+.settings/
+
+# Maven build
+target/
+
+# OS files
+.DS_Store
