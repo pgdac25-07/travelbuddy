@@ -22,18 +22,18 @@ public class PackageService {
 
     // Update package
     public TravelPackage updatePackage(Integer id, TravelPackage updatedPkg) {
-        Optional<TravelPackage> optionalPkg = packageRepository.findById(id);
-        if (optionalPkg.isPresent()) {
-            TravelPackage existingPkg = optionalPkg.get();
-            existingPkg.setPackageName(updatedPkg.getPackageName());
-            existingPkg.setCompanyId(updatedPkg.getCompanyId());
-            existingPkg.setCost(updatedPkg.getCost());
-            existingPkg.setDuration(updatedPkg.getDuration());
-            existingPkg.setDescription(updatedPkg.getDescription());
-            existingPkg.setDestinationId(updatedPkg.getDestinationId());
-            return packageRepository.save(existingPkg);
-        }
-        return null; // or throw custom exception
+
+        TravelPackage existing = packageRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Package not found"));
+
+        existing.setPackageName(updatedPkg.getPackageName());
+        existing.setCost(updatedPkg.getCost());
+        existing.setDuration(updatedPkg.getDuration());
+        existing.setDescription(updatedPkg.getDescription());
+        existing.setDestinationId(updatedPkg.getDestinationId());
+
+        return packageRepository.save(existing);
     }
 
     // Delete package
@@ -48,6 +48,11 @@ public class PackageService {
 	public List<TravelPackage> findAllPackages() {
 		// TODO Auto-generated method stub
 		return packageRepository.findAll() ;
+	}
+
+	public TravelPackage getPackageById(Integer id) {
+	    return packageRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Package not found"));
 	}
 
 	

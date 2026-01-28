@@ -1,11 +1,17 @@
 // App.js
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+//Authentication Module
 import NavbarComponent from './components/NavbarComponent';
 import Home from './components/HomePage';
 import Login from './components/LoginComponent';
 import Register from './components/RegisterComponent';
 import FooterComponent from './components/FooterComponent'; // ← add this if you have a footer
+
+//Company Module
+import AddPackage from "./components/AddPackage";
+import CompanyPackages from "./components/CompanyPackages";
+import EditPackage from "./components/EditPackage";
 
 function App() {
   return (
@@ -20,6 +26,10 @@ function App() {
             <Route path="/"          element={<Home />} />
             <Route path="/login"     element={<Login />} />
             <Route path="/register"  element={<Register />} />
+            <Route path="/company/add-package" element={<AddPackage />} />
+            <Route path="/company/packages" element={<CompanyPackages />} />
+            <Route path="/company/edit-package/:id" element={<EditPackage />} />
+
 
             <Route
      path="/customer"
@@ -27,9 +37,21 @@ function App() {
       />
 
       <Route
-       path="/company"
-      element={<h1 style={{ textAlign: "center" }}>Travel Company Dashboard</h1>}
-      />
+  path="/company"
+  element={
+    <div style={{ textAlign: "center" }}>
+      <h1>Travel Company Dashboard</h1>
+
+      <div style={{ marginTop: "20px" }}>
+        <a href="/company/add-package">Add Package</a>
+      </div>
+
+      <div style={{ marginTop: "10px" }}>
+        <a href="/company/packages">My Packages</a>
+      </div>
+    </div>
+  }
+/>
 
 
             {/* 404 page */}
