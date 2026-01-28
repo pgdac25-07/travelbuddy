@@ -26,26 +26,21 @@ function Login() {
         }),
       });
 
-      const data = await response.json();   // assuming backend returns JSON
+      const data = await response.json(); // assuming backend returns JSON
       console.log(data);
       localStorage.setItem("role", data.role);
 
-    if (data.role === "CUSTOMER") {
-      navigate("/customer");
-    } else if (data.role === "TRAVEL_COMPANY") {
-      navigate("/company");
-    } else {
-     alert("Unknown role");
-    }
+      if (data.role === "CUSTOMER") {
+        navigate("/customer");
+      } else if (data.role === "TRAVEL_COMPANY") {
+        navigate("/company");
+      } else {
+        alert("Unknown role");
+      }
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("username", username.trim());  // optional
-
-      
-
+      localStorage.setItem("username", username.trim()); // optional
     } catch (err) {
-      
       console.log(err);
-      
     } finally {
       setLoading(false);
     }
@@ -56,8 +51,6 @@ function Login() {
       <div style={styles.card}>
         <h2 style={styles.title}>Travel Buddy</h2>
         <p style={styles.subtitle}>Login to continue</p>
-
-        
 
         <form onSubmit={handleLogin}>
           <input
