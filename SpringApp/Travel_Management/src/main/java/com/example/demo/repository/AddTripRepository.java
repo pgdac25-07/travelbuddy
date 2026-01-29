@@ -1,5 +1,14 @@
 package com.example.demo.repository;
 
-public class AddTripRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-}
+import com.example.demo.entity.AddTrip;
+
+@Repository
+public interface AddTripRepository extends JpaRepository<AddTrip, Integer> {
+		
+		
+	}
+
+
