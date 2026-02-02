@@ -2,141 +2,94 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  // const [message, setMessage] = useState("");      // success or error message
+  const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    // setMessage("");
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8081/auth/login", {
+      const res = await fetch("http://localhost:8081/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({
-          username: username.trim(),
-          password: password,
-        }),
+        body: JSON.stringify(form),
       });
 
-      const data = await response.json(); // assuming backend returns JSON
-      console.log(data);
-      localStorage.setItem("role", data.role);
+      const data = await res.json();
 
-      if (data.role === "CUSTOMER") {
-        navigate("/customer");
-      } else if (data.role === "TRAVEL_COMPANY") {
-        navigate("/company");
-      } else {
-        alert("Unknown role");
+      if (data.message === "invalid login") {
+        alert("Invalid username or password");
+        return;
       }
+
+      // ✅ Save session
+      const role = data.role?.toUpperCase();
+
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("username", username.trim()); // optional
+      localStorage.setItem("username", form.username);
+      localStorage.setItem("role", role);
+
+      // ✅ Role based routing
+      const routes = {
+        ADMIN: "/admin",
+        COMPANY: "/company",
+        CUSTOMER: "/customer",
+      };
+
+      navigate(routes[role] || "/");
+
     } catch (err) {
       console.log(err);
+      alert("Server error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Travel Buddy</h2>
-        <p style={styles.subtitle}>Login to continue</p>
+    <div
+      className="d-flex justify-content-center align-items-center min-vh-100"
+      style={{
+        background:
+          "url('https://images.unsplash.com/photo-1501785888041-af3ef285b470') center/cover no-repeat",
+      }}
+    >
+      <form
+        onSubmit={handleLogin}
+        className="bg-white p-5 rounded shadow"
+        style={{ width: "350px" }}
+      >
+        <h3 className="text-center fw-bold mb-4">Travel Buddy Login</h3>
 
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-            required
-            disabled={loading}
-          />
+        <input
+          name="username"
+          placeholder="Username"
+          className="form-control mb-3"
+          onChange={handleChange}
+          required
+        />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-            required
-            disabled={loading}
-          />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          className="form-control mb-4"
+          onChange={handleChange}
+          required
+        />
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              ...styles.button,
-              opacity: loading ? 0.6 : 1,
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-      </div>
+        <button className="btn btn-primary w-100" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+      </form>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#687eec",
-  },
-  card: {
-    background: "#f7f7f7",
-    padding: "30px",
-    borderRadius: "10px",
-    width: "320px",
-    boxShadow: "0 0 10px rgba(112, 35, 104, 0.2)",
-    textAlign: "center",
-  },
-  title: {
-    margin: "0 0 8px 0",
-    color: "#3a0b40",
-  },
-  subtitle: {
-    margin: "0 0 24px 0",
-    color: "#555",
-    fontSize: "14px",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "15px",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    fontSize: "14px",
-  },
-  button: {
-    width: "100%",
-    padding: "10px",
-    background: "#3a0b40",
-    color: "#d3edf0",
-    border: "none",
-    borderRadius: "5px",
-    fontWeight: "bold",
-    cursor: "pointer",
-  },
-  message: {
-    marginBottom: "16px",
-    fontSize: "14px",
-  },
-};
 
 export default Login;

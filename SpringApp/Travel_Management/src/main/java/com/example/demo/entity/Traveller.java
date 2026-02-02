@@ -2,23 +2,21 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
+import jakarta.persistence.*;
+import lombok.*;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "travellers")
 public class Traveller {
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "traveller_id")
     private Integer travellerId;
 
     private String fname;
@@ -26,6 +24,9 @@ public class Traveller {
     private LocalDate bdate;
     private String gender;
 
-    private Integer bookingId;
-
+    // many travellers -> one booking
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "booking_id")
+    @JsonIgnore
+    private Booking booking;
 }

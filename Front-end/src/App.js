@@ -17,7 +17,11 @@ import AddTrips from "./components/AddTrips";
 //Customer Module
 import CustomerPackages from "./components/CustomerPackages";
 import CustomerTrips from "./components/CustomerTrips";
-
+import BookingForm from "./components/BookingForm";
+//Admin Module
+import AdminDashboard from "./components/AdminDashboard";
+import AdminTravellersByPackage from "./components/AdminTravellersByPackage";
+import AdminTravellers from "./components/AdminTravellers";
 function App() {
   return (
     <BrowserRouter>
@@ -36,6 +40,10 @@ function App() {
             <Route path="/company/edit-package/:id" element={<EditPackage />} />
             <Route path="/company/add-trip" element={<AddTrips />} />
             <Route path="/customer/packages" element={<CustomerPackages />} />
+            <Route path="/customer/packages/book/:tripId" element={<BookingForm />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/travellers-by-package" element={<AdminTravellersByPackage />} />
+            <Route path="/admin/travellers" element={<AdminTravellers />} />
             <Route
               path="/customer"
               element={

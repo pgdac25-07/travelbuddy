@@ -12,9 +12,13 @@ import lombok.NoArgsConstructor;
 public class BookTripRequest {
 
 
+//    private Integer customerId;
+//    private Integer tripId;
+//    private Boolean includeSelf;
+//
+//    private List<TravellerRequest> travellers;
+
     private Integer customerId;
     private Integer tripId;
-    private Boolean includeSelf;
-
     private List<TravellerRequest> travellers;
 }

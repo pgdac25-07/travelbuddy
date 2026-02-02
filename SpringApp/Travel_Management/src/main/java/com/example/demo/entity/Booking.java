@@ -1,31 +1,41 @@
 package com.example.demo.entity;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "bookings")
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booking_id")
     private Integer bookingId;
 
-    private Integer customerId;
-    private Integer tripId;
+    @Column(name = "booking_date")
     private LocalDate bookingDate;
-    private Integer noOfTravellers;
-    private String paymentStatus;
-}
 
+    @Column(name = "no_of_travellers")
+    private Integer noOfTravellers;
+
+    @Column(name = "payment_status")
+    private String paymentStatus;
+
+    // many bookings -> one customer
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    // trip_id exists but no Trip relation used
+    @Column(name = "trip_id")
+    private Integer tripId;
+
+    // one booking -> many travellers
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private List<Traveller> travellers;
+}

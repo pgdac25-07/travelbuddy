@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
+import com.example.demo.entity.*;
 @Entity
 @Table(name = "users")
 public class Users {
@@ -34,15 +34,18 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role_id")
-    private Integer roleId;
+   
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "acc_create_date")
     private LocalDateTime accCreateDate;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+    
     // 🔹 Constructors
     public Users() {
     }
@@ -104,12 +107,12 @@ public class Users {
         this.password = password;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getStatus() {

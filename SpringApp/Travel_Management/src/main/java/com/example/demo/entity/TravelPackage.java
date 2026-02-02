@@ -27,6 +27,7 @@ public class TravelPackage {
     private String duration;
     private String description;
     private Integer destinationId;
+    
 
     
 }

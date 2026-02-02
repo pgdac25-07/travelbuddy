@@ -1,82 +1,60 @@
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/packages/logo.png";
 
 function NavbarComponent() {
   const navigate = useNavigate();
 
-  // Very simple check → is user logged in?
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   const username = localStorage.getItem("username") || "User";
 
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("username");
+  const logout = () => {
+    localStorage.clear();
     navigate("/login");
   };
 
   return (
-    <nav style={styles.nav}>
-      <Link to="/" style={styles.logoLink}>
-        <h3 style={styles.logo}>Travel Buddy</h3>
-      </Link>
+    <nav className="navbar navbar-dark bg-dark px-5 py-3 shadow">
 
-      <div style={styles.links}>
+      {/* Logo */}
+      <Link to="/" className="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4">
+  <img src={logo} alt="logo" width="90" className="img-fluid rounded" />
+  Travel Buddy
+</Link>
+
+      <div className="d-flex align-items-center gap-3">
+
         {isLoggedIn ? (
           <>
-            <span style={styles.welcome}>Welcome, {username}</span>
-            <button onClick={handleLogout} style={styles.logoutButton}>
+            <span className="text-light fs-5">
+              Welcome, {username}
+            </span>
+
+            <button
+              onClick={logout}
+              className="btn btn-danger px-4"
+            >
               Logout
             </button>
           </>
         ) : (
           <>
-          <Link to="/" style={styles.link}>Home</Link>
-            <Link to="/login" style={styles.link}>Login</Link>
-            <Link to="/register" style={styles.link}>Register</Link>
+            <Link to="/" className="btn btn-outline-light px-4">
+              Home
+            </Link>
+
+            <Link to="/login" className="btn btn-primary px-4">
+              Login
+            </Link>
+
+            <Link to="/register" className="btn btn-success px-4">
+              Register
+            </Link>
           </>
         )}
+
       </div>
     </nav>
   );
 }
-
-const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "15px 30px",
-    background: "#230527",
-  },
-  logoLink: {
-    textDecoration: "none",
-  },
-  logo: {
-    color: "#fff",
-    margin: 0,
-  },
-  links: {
-    display: "flex",
-    alignItems: "center",
-    gap: "25px",
-  },
-  link: {
-    color: "#fff",
-    textDecoration: "none",
-    fontSize: "16px",
-  },
-  welcome: {
-    color: "#e0d4ff",
-    fontSize: "16px",
-  },
-  logoutButton: {
-    background: "transparent",
-    border: "1px solid #ff7777",
-    color: "#ff7777",
-    padding: "6px 14px",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "15px",
-  },
-};
 
 export default NavbarComponent;

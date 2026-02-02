@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +10,12 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.BookTripRequest;
 import com.example.demo.dto.TravellerRequest;
 import com.example.demo.entity.Booking;
+import com.example.demo.entity.Customer;
 import com.example.demo.entity.Traveller;
-import com.example.demo.entity.Users;
 import com.example.demo.repository.BookingRepository;
-import com.example.demo.repository.TravellerRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.CustomerRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class BookingService {
@@ -21,56 +24,42 @@ public class BookingService {
     private BookingRepository bookingRepo;
 
     @Autowired
-    private TravellerRepository travellerRepo;
+    private CustomerRepository customerRepo;
 
-    @Autowired
-    private UserRepository userRepo; 
+    @Transactional
+    public Booking bookTrip(BookTripRequest req) {
 
-    public String bookTrip(BookTripRequest req) {
+        Customer customer = customerRepo.findById(req.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
-        // 1️⃣ Create booking
         Booking booking = new Booking();
-        booking.setCustomerId(req.getCustomerId());
+
+        booking.setCustomer(customer);
         booking.setTripId(req.getTripId());
         booking.setBookingDate(LocalDate.now());
         booking.setPaymentStatus("PENDING");
 
-        int count = req.getTravellers().size();
+        List<Traveller> travellers = new ArrayList<>();
 
-        if (Boolean.TRUE.equals(req.getIncludeSelf())) {
-            count += 1;
-        }
-
-        booking.setNoOfTravellers(count);
-
-        Booking savedBooking = bookingRepo.save(booking);
-
-        // 2️⃣ Add travellers from form
         for (TravellerRequest t : req.getTravellers()) {
             Traveller tr = new Traveller();
             tr.setFname(t.getFname());
             tr.setLname(t.getLname());
             tr.setBdate(t.getBdate());
             tr.setGender(t.getGender());
-            tr.setBookingId(savedBooking.getBookingId());
+            tr.setBooking(booking);
 
-            travellerRepo.save(tr);
+            travellers.add(tr);
         }
 
-        // 3️⃣ Include self as traveller (checkbox)
-        if (Boolean.TRUE.equals(req.getIncludeSelf())) {
+        booking.setTravellers(travellers);
+        booking.setNoOfTravellers(travellers.size());
 
-            Users customer = userRepo.findById(req.getCustomerId())
-                    .orElseThrow(() -> new RuntimeException("Customer not found"));
+        return bookingRepo.save(booking); // ✅ return saved object
+    }
 
-            Traveller self = new Traveller();
-            self.setFname(customer.getFname());
-            self.setLname(customer.getLname());
-            self.setBookingId(savedBooking.getBookingId());
 
-            travellerRepo.save(self);
-        }
-
-        return "Trip booked successfully";
+    public List<Booking> findAll() {
+        return bookingRepo.findAll();
     }
 }
