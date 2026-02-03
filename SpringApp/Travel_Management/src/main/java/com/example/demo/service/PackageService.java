@@ -22,7 +22,7 @@ public class PackageService {
         return packageRepository.save(pkg);
     }
 
-    // Update package
+ // Update package
     public TravelPackage updatePackage(Integer id, TravelPackage updatedPkg) {
         return packageRepository.findById(id)
                 .map(existingPkg -> {
@@ -37,6 +37,7 @@ public class PackageService {
                 .orElseThrow(() -> new RuntimeException("Package not found with id: " + id));
     }
 
+
     // Delete package
     public boolean deletePackage(Integer id) {
         if (packageRepository.existsById(id)) {
@@ -50,4 +51,14 @@ public class PackageService {
     public List<TravelPackage> findAllPackages() {
         return packageRepository.findAll();
     }
+	
+
+	public TravelPackage getPackageById(Integer id) {
+	    return packageRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Package not found"));
+	}
+
+	public List<TravelPackage> getPackagesByCompanyId(Integer companyId) {
+	    return packageRepository.findByCompanyId(companyId);
+	}
 }

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,18 +11,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="role")
-public class Roles {
-	
+@Table(name = "travellers")
+public class Traveller {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="role_id")
-	Integer  roleId;
-	
-	@Column(name="rname")
-	String rname;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer travellerId;
+
+    private String fname;
+    private String lname;
+    private LocalDate bdate;
+    private String gender;
+
+    private Integer bookingId;
+
 }

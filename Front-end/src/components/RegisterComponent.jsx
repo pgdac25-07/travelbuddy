@@ -56,18 +56,49 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/authister", {
+      // Map frontend fields to backend expected format
+      const roleIdMap = {
+        "traveller": 1,      // CUSTOMER
+        "travelCompany": 2   // TRAVEL_COMPANY
+      };
+
+      const requestData = {
+        username: formData.email, // Use email as username
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        roleId: roleIdMap[formData.role] || 1,
+        gender: formData.gender
+      };
+
+      const response = await fetch("http://localhost:8081/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        credentials: "include",
+        body: JSON.stringify(requestData),
       });
 
-      const data = await response.json();
+      // Handle both JSON and text responses
+      let data;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        // Try to parse as JSON, if fails use as message
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = { message: text };
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
+        throw new Error(data.message || data || "Registration failed");
       }
 
       console.log("Registered successfully:", data);
