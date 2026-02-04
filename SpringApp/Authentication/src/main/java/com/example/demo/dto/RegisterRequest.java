@@ -6,6 +6,10 @@ public class RegisterRequest {
     private String email;
     private String password;
     private int roleId;   // 1 = CUSTOMER, 2 = TRAVEL_COMPANY
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String phone;
 
     public String getUsername() {
         return username;
@@ -30,6 +34,30 @@ public class RegisterRequest {
     }
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
 

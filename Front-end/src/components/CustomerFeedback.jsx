@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const FEEDBACK_BASE_URL = "http://localhost:8080/api/feedback";
@@ -13,49 +13,42 @@ function CustomerFeedback() {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
+  const [bookingsLoading, setBookingsLoading] = useState(true);
   const [result, setResult] = useState(null); // { type: "success"|"error", message: string }
 
-  const loadBookingsForCustomer = async () => {
-    if (!userId || role !== "CUSTOMER") {
-      setBookings([]);
-      return;
-    }
-
-    try {
-      const res = await fetch(
-        `${BOOKINGS_BASE_URL}/admin/travellers/all-with-details`,
-        { credentials: "include" }
-      );
-      if (!res.ok) {
-        // Fallback: if admin endpoint not accessible, just skip loading
-        console.warn("Failed to load bookings for feedback:", res.status);
+  useEffect(() => {
+    const loadBookingsForCustomer = async () => {
+      if (!userId || role !== "CUSTOMER") {
         setBookings([]);
+        setBookingsLoading(false);
         return;
       }
-      const data = await res.json();
-      // Filter bookings belonging to this customer/user if structure allows
-      const allBookings = Array.isArray(data) ? data : [];
-      const myBookings = allBookings.filter((b) => {
-        // Try different possible fields that might relate to user/customer
-        return (
-          b.customerId === userId ||
-          b.userId === userId ||
-          b.user_id === userId ||
-          b.customer_id === userId
-        );
-      });
-      setBookings(myBookings);
-    } catch (err) {
-      console.warn("Error loading bookings for feedback:", err);
-      setBookings([]);
-    }
-  };
 
-  // Load bookings once when component renders
-  if (bookings.length === 0 && role === "CUSTOMER" && userId) {
-    // simple guard to avoid multiple calls in strict mode
+      setBookingsLoading(true);
+      try {
+        // Call the customer bookings endpoint
+        const res = await fetch(
+          `${BOOKINGS_BASE_URL}/bookings/customer/${userId}`,
+          { credentials: "include" }
+        );
+        if (!res.ok) {
+          console.warn("Failed to load bookings for feedback:", res.status);
+          setBookings([]);
+          setBookingsLoading(false);
+          return;
+        }
+        const data = await res.json();
+        setBookings(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Error loading bookings for feedback:", err);
+        setBookings([]);
+      } finally {
+        setBookingsLoading(false);
+      }
+    };
+
     loadBookingsForCustomer();
-  }
+  }, [userId, role]); // Only run when userId or role changes
 
   const submitFeedback = async (e) => {
     e.preventDefault();
@@ -128,19 +121,24 @@ function CustomerFeedback() {
                 className="form-select"
                 value={selectedBookingId}
                 onChange={(e) => setSelectedBookingId(e.target.value)}
-                disabled={loading || !Array.isArray(bookings) || bookings.length === 0}
+                disabled={loading || bookingsLoading || !Array.isArray(bookings) || bookings.length === 0}
                 required
               >
-                <option value="">Choose your booking</option>
+                <option value="">
+                  {bookingsLoading ? "Loading bookings..." : "Choose your booking"}
+                </option>
                 {Array.isArray(bookings) &&
                   bookings.map((b) => (
                     <option key={b.bookingId} value={b.bookingId}>
-                      #{b.bookingId} - {b.packageName || b.tripName || "Trip"} (
-                      {b.startDate || b.start_date} to {b.endDate || b.end_date})
+                      #{b.bookingId} - {b.packageName || "Trip"} ({b.tripDate || "N/A"})
                     </option>
                   ))}
               </select>
-              {!bookings || bookings.length === 0 ? (
+              {bookingsLoading ? (
+                <div className="form-text text-muted">
+                  Loading your bookings...
+                </div>
+              ) : !bookings || bookings.length === 0 ? (
                 <div className="form-text text-danger">
                   No bookings found for your account. Please book a trip first.
                 </div>

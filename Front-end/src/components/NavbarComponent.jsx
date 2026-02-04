@@ -17,7 +17,10 @@ function NavbarComponent() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#230527" }}>
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: "#230527" }}
+    >
       <div className="container">
         <Link className="navbar-brand text-white" to="/">
           Travel Buddy
@@ -27,12 +30,18 @@ function NavbarComponent() {
           {isLoggedIn ? (
             <>
               {role === "CUSTOMER" && (
-                <Link className="nav-link text-white me-2" to="/customer/feedback">
+                <Link
+                  className="nav-link text-white me-2"
+                  to="/customer/feedback"
+                >
                   Feedback
                 </Link>
               )}
               {role === "TRAVEL_COMPANY" && (
-                <Link className="nav-link text-white me-2" to="/company/feedback">
+                <Link
+                  className="nav-link text-white me-2"
+                  to="/company/feedback"
+                >
                   Feedback
                 </Link>
               )}
@@ -46,13 +55,15 @@ function NavbarComponent() {
             </>
           ) : (
             <>
-              <Link className="nav-link text-white" to="/">
+              <Link className="nav-link text-white me-4" to="/">
                 Home
               </Link>
-              <Link className="nav-link text-white" to="/login">
+
+              <Link className="nav-link text-white me-4" to="/login">
                 Login
               </Link>
-              <Link className="nav-link text-white" to="/register">
+
+              <Link className="nav-link text-white me-4" to="/register">
                 Register
               </Link>
             </>

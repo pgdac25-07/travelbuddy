@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CDAC-LAB\\projectCDAC\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj": {}
+    "D:\\projectFinal\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj": {}
   },
   "projects": {
-    "D:\\CDAC-LAB\\projectCDAC\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj": {
+    "D:\\projectFinal\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CDAC-LAB\\projectCDAC\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj",
+        "projectUniqueName": "D:\\projectFinal\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj",
         "projectName": "FeedbackService",
-        "projectPath": "D:\\CDAC-LAB\\projectCDAC\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj",
-        "packagesPath": "C:\\Users\\ankit\\.nuget\\packages\\",
-        "outputPath": "D:\\CDAC-LAB\\projectCDAC\\travelbuddy\\SpringApp\\Feedback\\Feedback\\obj\\",
+        "projectPath": "D:\\projectFinal\\travelbuddy\\SpringApp\\Feedback\\Feedback\\FeedbackService.csproj",
+        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+        "outputPath": "D:\\projectFinal\\travelbuddy\\SpringApp\\Feedback\\Feedback\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ankit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

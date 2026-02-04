@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const FEEDBACK_BASE_URL = "https://localhost:8080/api/feedback";
+const FEEDBACK_BASE_URL = "http://localhost:8080/api/feedback";
 
 function CompanyFeedback() {
   const role = localStorage.getItem("role");

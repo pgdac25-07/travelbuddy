@@ -44,6 +44,21 @@ public class AuthController {
         user.setPassword(req.getPassword()); // plain text for now
         user.setRoleId(req.getRoleId());
 
+        // Set user personal information if provided
+        if (req.getFirstName() != null) {
+            user.setFname(req.getFirstName());
+        }
+        if (req.getLastName() != null) {
+            user.setLname(req.getLastName());
+        }
+        if (req.getPhone() != null && !req.getPhone().isEmpty()) {
+            try {
+                user.setPhoneno(Integer.parseInt(req.getPhone()));
+            } catch (NumberFormatException e) {
+                // Ignore if phone is not a valid number
+            }
+        }
+
         // For travel company registration (roleId = 2) keep the account in PENDING
         // state until it is approved by the admin module.
         // Admin (roleId = 3) and other roles are ACTIVE immediately.
@@ -54,7 +69,30 @@ public class AuthController {
             user.setStatus("ACTIVE");
         }
 
-        userRepository.save(user);
+        Users savedUser = userRepository.save(user);
+
+        // If roleId = 1 (CUSTOMER/TRAVELLER), create customer entry
+        if (req.getRoleId() == 1) {
+            try {
+                // Call Travel_Management service to create customer entry
+                java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
+                String jsonBody = String.format("{\"userId\":%d,\"status\":\"1\"}", savedUser.getUserId());
+                java.net.http.HttpRequest customerRequest = java.net.http.HttpRequest.newBuilder()
+                        .uri(java.net.URI.create("http://localhost:8082/travelmgnt/customers/create"))
+                        .header("Content-Type", "application/json")
+                        .POST(java.net.http.HttpRequest.BodyPublishers.ofString(jsonBody))
+                        .build();
+
+                java.net.http.HttpResponse<String> response = client.send(customerRequest,
+                        java.net.http.HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() != 200) {
+                    System.err.println("Failed to create customer entry: " + response.body());
+                }
+            } catch (Exception e) {
+                System.err.println("Error creating customer entry: " + e.getMessage());
+                // Don't fail registration if customer creation fails - log and continue
+            }
+        }
 
         return ResponseEntity.ok("Registration successful");
     }

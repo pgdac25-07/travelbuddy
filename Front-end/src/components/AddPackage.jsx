@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddPackage() {
+  const navigate = useNavigate();
   const [packageName, setPackageName] = useState("");
   const [cost, setCost] = useState("");
   const [duration, setDuration] = useState("");
@@ -46,6 +48,16 @@ function AddPackage() {
     setLoading(true);
 
     try {
+      // If no image URL provided, generate a dynamic image based on package name
+      let finalImageUrl = imageUrl;
+      if (!finalImageUrl || finalImageUrl.trim() === "") {
+        // Generate unique image URL using picsum.photos with package name as seed
+        const packageNameForImage = (packageName || "travel").toLowerCase().replace(/\s+/g, "-");
+        // We'll use a temporary ID, but the actual ID will be set after package is created
+        // For now, use package name as seed
+        finalImageUrl = `https://picsum.photos/seed/${packageNameForImage}/400/200`;
+      }
+
       const response = await fetch("http://localhost:8080/packages/add", {
         method: "POST",
         headers: {
@@ -58,7 +70,7 @@ function AddPackage() {
           duration,
           description,
           destinationId,
-          imageUrl: imageUrl || null,
+          imageUrl: finalImageUrl,
         }),
       });
 
@@ -66,15 +78,24 @@ function AddPackage() {
         throw new Error("Failed to add package");
       }
 
+      const addedPackage = await response.json();
       alert("Package added successfully!");
 
-      // clear form
-      setPackageName("");
-      setCost("");
-      setDuration("");
-      setDescription("");
-      setDestinationId("");
-      setImageUrl("");
+      // Ask if user wants to add a trip for this package
+      const addTrip = window.confirm("Package added successfully! Would you like to add a trip for this package?");
+      
+      if (addTrip) {
+        // Navigate to add trip page with package ID
+        navigate(`/company/add-trip?packageId=${addedPackage.packageId}`);
+      } else {
+        // clear form
+        setPackageName("");
+        setCost("");
+        setDuration("");
+        setDescription("");
+        setDestinationId("");
+        setImageUrl("");
+      }
 
     } catch (err) {
       console.error(err);
@@ -148,10 +169,15 @@ function AddPackage() {
 
         <input
           type="url"
-          placeholder="Image URL (optional)"
+          placeholder="Image URL (optional - auto-generated if left empty)"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
+        {!imageUrl && (
+          <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
+            💡 If left empty, an image will be automatically generated based on package name
+          </div>
+        )}
 
         <div style={{ marginBottom: "15px" }}>
           <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>

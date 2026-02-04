@@ -102,8 +102,19 @@ function CustomerDashboard() {
             .filter((pkg) => pkg && pkg.packageId && pkg.packageName) // Filter out invalid packages
             .map((pkg) => {
               const samplePkg = packageMap[pkg.packageName];
-              // Use imageUrl from database if available, otherwise use sample/default
-              const imageToUse = pkg.imageUrl || (samplePkg ? samplePkg.image : "https://source.unsplash.com/400x200/?travel,india");
+              
+              // Generate image URL - use database imageUrl if available, otherwise generate based on package
+              let imageToUse;
+              if (pkg.imageUrl) {
+                imageToUse = pkg.imageUrl;
+              } else if (samplePkg && samplePkg.image) {
+                imageToUse = samplePkg.image;
+              } else {
+                // Generate unique image based on package name and ID using picsum.photos
+                const packageNameForImage = (pkg.packageName || "travel").toLowerCase().replace(/\s+/g, "-");
+                imageToUse = `https://picsum.photos/seed/${packageNameForImage}-${pkg.packageId}/400/200`;
+              }
+              
               if (samplePkg) {
                 return {
                   ...pkg,
@@ -183,9 +194,11 @@ function CustomerDashboard() {
                 src={pkg.image}
                 className="card-img-top"
                 alt={pkg.packageName || "Travel package"}
-                style={{ height: "200px", objectFit: "cover" }}
+                style={{ height: "200px", objectFit: "cover", backgroundColor: "#f0f0f0" }}
                 onError={(e) => {
-                  e.target.src = `https://source.unsplash.com/400x200/?travel,${pkg.packageName?.replace(/\s+/g, ',') || 'india'}`;
+                  // Fallback to picsum.photos if original image fails
+                  const packageNameForImage = (pkg.packageName || "travel").toLowerCase().replace(/\s+/g, "-");
+                  e.target.src = `https://picsum.photos/seed/${packageNameForImage}-${pkg.packageId}/400/200`;
                 }}
               />
               <div className="card-body d-flex flex-column">

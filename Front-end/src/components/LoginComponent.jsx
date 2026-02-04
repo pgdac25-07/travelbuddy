@@ -18,7 +18,7 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        
+
         body: JSON.stringify({
           username: username.trim(),
           password: password,
@@ -53,13 +53,16 @@ function Login() {
       // Store user ID for booking - LoginResponse has user object with userId
       localStorage.setItem(
         "userId",
-        data.user?.userId || data.userId || data.id || ""
+        data.user?.userId || data.userId || data.id || "",
       );
 
       // Route based on normalized role
       if (normalizedRole === "CUSTOMER") {
         navigate("/customer");
-      } else if (normalizedRole === "TRAVEL_COMPANY" || normalizedRole === "COMPANY") {
+      } else if (
+        normalizedRole === "TRAVEL_COMPANY" ||
+        normalizedRole === "COMPANY"
+      ) {
         navigate("/company");
       } else if (normalizedRole === "ADMIN") {
         navigate("/admin");

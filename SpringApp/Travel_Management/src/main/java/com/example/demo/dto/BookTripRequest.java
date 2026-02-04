@@ -15,6 +15,7 @@ public class BookTripRequest {
     private Integer customerId;
     private Integer tripId;
     private Boolean includeSelf;
+    private String paymentStatus; // PAID or PENDING
 
     private List<TravellerRequest> travellers;
 }

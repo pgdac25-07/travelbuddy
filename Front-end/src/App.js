@@ -13,6 +13,7 @@ import AddPackage from "./components/AddPackage";
 import CompanyPackages from "./components/CompanyPackages";
 import EditPackage from "./components/EditPackage";
 import AddTrips from "./components/AddTrips";
+import CompanyBookings from "./components/CompanyBookings";
 
 //Customer Module
 import CustomerPackages from "./components/CustomerPackages";
@@ -43,6 +44,7 @@ function App() {
             <Route path="/company/packages" element={<CompanyPackages />} />
             <Route path="/company/edit-package/:id" element={<EditPackage />} />
             <Route path="/company/add-trip" element={<AddTrips />} />
+            <Route path="/company/bookings" element={<CompanyBookings />} />
             <Route path="/customer/packages" element={<CustomerPackages />} />
             <Route path="/customer" element={<CustomerDashboard />} />
             <Route path="/customer/package/:packageId" element={<PackageDetail />} />
@@ -53,21 +55,84 @@ function App() {
             <Route
               path="/company"
               element={
-                <div style={{ textAlign: "center" }}>
-                  <h1>Travel Company Dashboard</h1>
+                <div style={{ textAlign: "center", padding: "40px 20px" }}>
+                  <h1 style={{ marginBottom: "30px" }}>Travel Company Dashboard</h1>
 
-                  <Link to="/company/add-trip">Add Trip</Link>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "20px", maxWidth: "400px", margin: "0 auto" }}>
+                    <Link
+                      to="/company/add-package"
+                      style={{
+                        padding: "15px 30px",
+                        background: "#09547c",
+                        color: "white",
+                        textDecoration: "none",
+                        borderRadius: "8px",
+                        fontSize: "18px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Add Package
+                    </Link>
 
-                  <div style={{ marginTop: "20px" }}>
-                    <Link to="/company/add-package">Add Package</Link>
-                  </div>
+                    <Link
+                      to="/company/packages"
+                      style={{
+                        padding: "15px 30px",
+                        background: "#28a745",
+                        color: "white",
+                        textDecoration: "none",
+                        borderRadius: "8px",
+                        fontSize: "18px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      View All Packages
+                    </Link>
 
-                  <div style={{ marginTop: "10px" }}>
-                    <Link to="/company/packages">My Packages</Link>
-                  </div>
+                    <Link
+                      to="/company/add-trip"
+                      style={{
+                        padding: "15px 30px",
+                        background: "#17a2b8",
+                        color: "white",
+                        textDecoration: "none",
+                        borderRadius: "8px",
+                        fontSize: "18px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Add Trip
+                    </Link>
 
-                  <div style={{ marginTop: "10px" }}>
-                    <Link to="/company/feedback">View Feedback</Link>
+                    <Link
+                      to="/company/bookings"
+                      style={{
+                        padding: "15px 30px",
+                        background: "#ffc107",
+                        color: "#000",
+                        textDecoration: "none",
+                        borderRadius: "8px",
+                        fontSize: "18px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      View Bookings
+                    </Link>
+
+                    <Link
+                      to="/company/feedback"
+                      style={{
+                        padding: "15px 30px",
+                        background: "#6c757d",
+                        color: "white",
+                        textDecoration: "none",
+                        borderRadius: "8px",
+                        fontSize: "18px",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      View Feedback
+                    </Link>
                   </div>
                 </div>
               }
