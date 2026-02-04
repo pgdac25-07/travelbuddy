@@ -24,13 +24,15 @@ namespace FeedbackService.Data
                 entity.HasKey(e => e.FeedbackId);
 
                 entity.Property(e => e.FeedbackId)
-                      .HasColumnName("feedback_id");
+                      .HasColumnName("feedback_id")
+                      .ValueGeneratedOnAdd();           //If you want, you can keep else remove 
 
                 entity.Property(e => e.CustomerId)
                       .HasColumnName("customer_id");
 
-                entity.Property(e => e.CompanyId)
-                      .HasColumnName("company_id");
+                entity.Property(e => e.BookingId)
+       .HasColumnName("booking_id");
+
 
                 entity.Property(e => e.Rating)
                       .HasColumnName("rating");

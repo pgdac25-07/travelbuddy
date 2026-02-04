@@ -1,13 +1,14 @@
-﻿using FeedbackService.Services;
+﻿using FeedbackService.Models;
+using FeedbackService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
 public class FeedbackController : ControllerBase
 {
-    private readonly IFeedbackService _service;
+    private readonly IFeedbackServiceA _service;
 
-    public FeedbackController(IFeedbackService service)
+    public FeedbackController(IFeedbackServiceA service)
     {
         _service = service;
     }
@@ -20,11 +21,11 @@ public class FeedbackController : ControllerBase
         return Ok(new { message = "Feedback submitted successfully" });
     }
 
-    // Travel company views feedback
-    [HttpGet("company/{companyId}")]
-    public async Task<IActionResult> GetCompanyFeedback(int companyId)
+    // View feedback by booking
+    [HttpGet("booking/{bookingId}")]
+    public async Task<IActionResult> GetFeedbackByBooking(int bookingId)
     {
-        var feedbacks = await _service.ViewCompanyFeedbackAsync(companyId);
+        var feedbacks = await _service.ViewFeedbackByBookingAsync(bookingId);
         return Ok(feedbacks);
     }
 }

@@ -14,15 +14,13 @@ import com.example.demo.entity.Booking;
 import com.example.demo.service.BookingService;
 
 @RestController
-@RequestMapping("/bookings")
-@CrossOrigin(origins = "http://localhost:3000")
-
+@RequestMapping("/travelmgnt")
 public class BookingController {
 	
 	@Autowired
     private BookingService bookingService;
 	
-	 @PostMapping("/book")
+	 @PostMapping("/bookings/book")
 	    public String bookTrip(@RequestBody BookTripRequest req) {
 	        bookingService.bookTrip(req);
 	        return "Booking successful";

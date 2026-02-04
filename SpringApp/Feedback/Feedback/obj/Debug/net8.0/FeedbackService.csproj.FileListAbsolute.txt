@@ -1,0 +1,77 @@
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\appsettings.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.exe
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.deps.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.runtimeconfig.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.pdb
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\MySqlConnector.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.csproj.AssemblyReference.cache
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.AssemblyInfoInputs.cache
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.AssemblyInfo.cs
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.csproj.CoreCompileInputs.cache
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets\msbuild.FeedbackService.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets\msbuild.build.FeedbackService.props
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.FeedbackService.props
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.FeedbackService.props
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\scopedcss\bundle\FeedbackService.styles.css
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\Feedback.9B9457FB.Up2Date
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\refint\FeedbackService.dll
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.pdb
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.genruntimeconfig.cache
+C:\Users\VISHAL RANE\Downloads\Feedback\Feedback\obj\Debug\net8.0\ref\FeedbackService.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\appsettings.Development.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\appsettings.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.staticwebassets.endpoints.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.exe
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.deps.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.runtimeconfig.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\FeedbackService.pdb
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\MySqlConnector.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.csproj.AssemblyReference.cache
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.GeneratedMSBuildEditorConfig.editorconfig
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.AssemblyInfoInputs.cache
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.AssemblyInfo.cs
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.csproj.CoreCompileInputs.cache
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.MvcApplicationPartsAssemblyInfo.cs
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.MvcApplicationPartsAssemblyInfo.cache
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\scopedcss\bundle\FeedbackService.styles.css
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.build.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.development.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\Feedback.9B9457FB.Up2Date
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\refint\FeedbackService.dll
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.pdb
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\FeedbackService.genruntimeconfig.cache
+D:\CDAC-LAB\cdacnotes\Feedback\Feedback_02022026\Feedback\Feedback\obj\Debug\net8.0\ref\FeedbackService.dll

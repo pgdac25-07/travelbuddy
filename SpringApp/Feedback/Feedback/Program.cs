@@ -1,6 +1,8 @@
 
+using FeedbackService.Data;
 using FeedbackService.Repositories;
 using FeedbackService.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeedbackService
 {
@@ -16,11 +18,22 @@ namespace FeedbackService
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // DbContext
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                        options.UseMySql(
+                          builder.Configuration.GetConnectionString("DefaultConnection"),
+                          ServerVersion.AutoDetect(
+                          builder.Configuration.GetConnectionString("DefaultConnection")
+        )
+    )
+);
+
             builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
-            builder.Services.AddScoped<IFeedbackService, Services.FeedbackService>();
+            builder.Services.AddScoped<IFeedbackServiceA, FeedbackServiceA>();
 
             var app = builder.Build();
-           
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

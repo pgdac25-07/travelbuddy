@@ -14,23 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Trip;
 import com.example.demo.service.TripService;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/trips")
+@RequestMapping("/travelmgnt")
 public class TripController {
 	@Autowired
     private TripService tripService;
 
-    @PostMapping("/add")
+    @PostMapping("/trips/add")
     public Trip addTrip(@RequestBody Trip trip) {
         return tripService.addTrip(trip);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/trips/all")
     public List<Trip> getAllTrips() {
         return tripService.getAllTrips();
     }
-    @GetMapping("/by-package/{packageId}")
+    @GetMapping("/trips/by-package/{packageId}")
     public List<Trip> getTripsByPackage(@PathVariable Integer packageId) {
         return tripService.getTripsByPackage(packageId);
     }

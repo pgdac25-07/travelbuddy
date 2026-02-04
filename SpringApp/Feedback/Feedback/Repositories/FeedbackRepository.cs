@@ -1,4 +1,6 @@
 ﻿using FeedbackService.Data;
+using FeedbackService.Models;
+using Microsoft.EntityFrameworkCore;
 namespace FeedbackService.Repositories
 {
     public class FeedbackRepository : IFeedbackRepository
@@ -16,13 +18,13 @@ namespace FeedbackService.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Feedback>> GetFeedbackByCompanyAsync(int companyId)
+        public async Task<List<Feedback>> GetFeedbackByBookingAsync(int bookingId)
         {
             return await _context.Feedbacks
-                .Where(f => f.CompanyId == companyId)
-                .OrderByDescending(f => f.CreatedAt)
+                .Where(f => f.BookingId == bookingId)
                 .ToListAsync();
         }
+
     }
 
 }
