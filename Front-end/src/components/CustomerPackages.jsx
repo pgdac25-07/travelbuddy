@@ -6,7 +6,7 @@ function CustomerPackages() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8082/packages/all")
+    fetch("http://localhost:8080/packages/all")
       .then((res) => res.json())
       .then((data) => setPackages(data));
   }, []);

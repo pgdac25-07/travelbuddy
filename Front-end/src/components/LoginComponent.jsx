@@ -14,12 +14,12 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8081/auth/login", {
+      const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        
         body: JSON.stringify({
           username: username.trim(),
           password: password,
@@ -28,14 +28,32 @@ function Login() {
 
       const data = await response.json(); // assuming backend returns JSON
       console.log(data);
-      localStorage.setItem("role", data.role);
 
-      if (data.role === "CUSTOMER") {
+      // Normalize role coming from backend (handles ROLE_ADMIN, role_admin, etc.)
+      let rawRole = data.role || "";
+      let normalizedRole = rawRole.toString().toUpperCase().trim();
+      if (normalizedRole.startsWith("ROLE_")) {
+        normalizedRole = normalizedRole.substring(5);
+      }
+
+      // Store normalized role
+      localStorage.setItem("role", normalizedRole);
+
+      // Store user ID for booking - LoginResponse has user object with userId
+      localStorage.setItem(
+        "userId",
+        data.user?.userId || data.userId || data.id || ""
+      );
+
+      // Route based on normalized role
+      if (normalizedRole === "CUSTOMER") {
         navigate("/customer");
-      } else if (data.role === "TRAVEL_COMPANY") {
+      } else if (normalizedRole === "TRAVEL_COMPANY" || normalizedRole === "COMPANY") {
         navigate("/company");
+      } else if (normalizedRole === "ADMIN") {
+        navigate("/admin");
       } else {
-        alert("Unknown role");
+        alert(`Unknown role: ${rawRole}`);
       }
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("username", username.trim()); // optional

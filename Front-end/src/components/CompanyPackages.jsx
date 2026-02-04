@@ -6,7 +6,7 @@ function CompanyPackages() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8082/packages/all")
+    fetch("http://localhost:8080/packages/all")
       .then((res) => res.json())
       .then((data) => setPackages(data));
   }, []);
@@ -19,7 +19,7 @@ function CompanyPackages() {
     if (!confirmDelete) return;
 
     const response = await fetch(
-      `http://localhost:8082/packages/delete/${id}`,
+      `http://localhost:8080/packages/delete/${id}`,
       {
         method: "DELETE",
       },

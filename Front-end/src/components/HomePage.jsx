@@ -1,74 +1,129 @@
-// components/Home.js   (or HomePage.js – whatever name you use)
-import { Link } from 'react-router-dom';          // ← add this import
-
+import { Link } from "react-router-dom";
 
 function Home() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   const username = localStorage.getItem("username") || "Guest";
 
-  return (
-    <>
-      
+  const packages = [
+    {
+      name: "Golden Triangle",
+      location: "Delhi - Agra - Jaipur",
+      days: "5 Days / 4 Nights",
+      price: "₹18,999",
+      image: "https://images.unsplash.com/photo-1587474260584-136574528ed5",
+      path: "/destination/golden-triangle",
+    },
+    {
+      name: "Royal Rajasthan",
+      location: "Udaipur - Jodhpur - Jaisalmer",
+      days: "6 Days / 5 Nights",
+      price: "₹24,500",
+      image: "https://images.unsplash.com/photo-1599661046289-e31897846e41",
+      path: "/destination/royal-rajasthan",
+    },
+    {
+      name: "Kashmir Paradise",
+      location: "Srinagar - Gulmarg - Pahalgam",
+      days: "5 Days / 4 Nights",
+      price: "₹21,000",
+      image: "https://images.unsplash.com/photo-1609947017136-9daf32a5eb16",
+      path: "/destination/kashmir-paradise",
+    },
+    {
+      name: "Kerala Backwaters",
+      location: "Munnar - Alleppey - Kochi",
+      days: "4 Days / 3 Nights",
+      price: "₹17,500",
+      image: "https://images.unsplash.com/photo-1593693411515-c20261bcad6e",
+      path: "/destination/kerala-backwaters",
+    },
+    {
+      name: "Goa Beach Escape",
+      location: "North Goa - South Goa",
+      days: "4 Days / 3 Nights",
+      price: "₹14,999",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      path: "/destination/goa-beach",
+    },
+    {
+      name: "Himachal Adventure",
+      location: "Shimla - Manali",
+      days: "5 Days / 4 Nights",
+      price: "₹19,800",
+      image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23",
+      path: "/destination/himachal-adventure",
+    },
+    {
+      name: "Uttarakhand Hills",
+      location: "Nainital - Mussoorie",
+      days: "5 Days / 4 Nights",
+      price: "₹16,750",
+      image: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d",
+      path: "/destination/uttarakhand-hills",
+    },
+    {
+      name: "Andaman Island Tour",
+      location: "Port Blair - Havelock",
+      days: "5 Days / 4 Nights",
+      price: "₹27,999",
+      image: "https://images.unsplash.com/photo-1589307000251-2a0c1fda6a8c",
+      path: "/destination/andaman-tour",
+    },
+  ];
 
-      <div style={styles.container}>
-        <h1 style={styles.title}>
+  return (
+    <div className="container py-5">
+
+      <div className="text-center mb-5">
+        <h1 className="fw-bold">
           {isLoggedIn ? `Welcome back, ${username}!` : "Welcome to Travel Buddy"}
         </h1>
 
-        <p style={styles.subtitle}>
-          {isLoggedIn 
-            ? "Start planning your next adventure ✈️" 
-            : "Login or register to explore amazing travel options"}
+        <p className="lead text-muted">
+          {isLoggedIn
+            ? "Choose your next destination 🌍"
+            : "Login or register to view travel packages"}
         </p>
 
         {!isLoggedIn && (
-          <div style={styles.buttons}>
-            <Link to="/login" style={styles.btn}>
+          <div className="d-flex justify-content-center gap-3 mt-4">
+            <Link to="/login" className="btn btn-primary px-4">
               Login
             </Link>
-            <Link to="/register" style={styles.btn}>
+            <Link to="/register" className="btn btn-outline-primary px-4">
               Register
             </Link>
           </div>
         )}
       </div>
-    </>
+
+      {/* SHOW PACKAGES ONLY IF LOGGED IN */}
+      {isLoggedIn && (
+        <div className="row g-4">
+          {packages.map((pkg, index) => (
+            <div className="col-md-6 col-lg-3" key={index}>
+              <Link to={pkg.path} className="text-decoration-none">
+                <div className="card h-100 shadow-sm">
+                  <img
+                    src={pkg.image}
+                    className="card-img-top"
+                    alt={pkg.name}
+                    style={{ height: "200px", objectFit: "cover" }}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{pkg.name}</h5>
+                    <p className="card-text small text-muted">{pkg.location}</p>
+                    <p className="mb-1"><strong>{pkg.days}</strong></p>
+                    <p className="text-success fw-bold">{pkg.price}</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
-
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "60px 20px",
-    minHeight: "80vh",
-    background: "linear-gradient(to bottom, #f0f4ff, #e6eaff)",
-  },
-  title: {
-    fontSize: "2.8rem",
-    marginBottom: "20px",
-    color: "#230527",
-  },
-  subtitle: {
-    fontSize: "1.3rem",
-    color: "#444",
-    maxWidth: "600px",
-    margin: "0 auto 30px",
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    marginTop: "30px",
-  },
-  btn: {
-    padding: "12px 28px",
-    background: "#3a0b40",
-    color: "white",
-    textDecoration: "none",
-    borderRadius: "6px",
-    fontSize: "1.1rem",
-    display: "inline-block",       // helps with consistent button look
-  },
-};
 
 export default Home;

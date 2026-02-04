@@ -6,7 +6,7 @@ function CustomerTrips() {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8082/trips/by-package/${packageId}`)
+    fetch(`http://localhost:8080/trips/by-package/${packageId}`)
       .then((res) => res.json())
       .then((data) => setTrips(data));
   }, [packageId]);

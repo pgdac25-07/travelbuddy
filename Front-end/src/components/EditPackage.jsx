@@ -15,7 +15,7 @@ function EditPackage() {
 
   // 1️⃣ load existing package
   useEffect(() => {
-    fetch(`http://localhost:8082/packages/${id}`)
+    fetch(`http://localhost:8080/packages/${id}`)
       .then(res => res.json())
       .then(data => setPkg(data));
   }, [id]);
@@ -24,7 +24,7 @@ function EditPackage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch(`http://localhost:8082/packages/update/${id}`, {
+    await fetch(`http://localhost:8080/packages/update/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(pkg),

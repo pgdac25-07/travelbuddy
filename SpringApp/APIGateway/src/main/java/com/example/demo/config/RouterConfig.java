@@ -40,7 +40,7 @@ public class RouterConfig {
 	public CorsWebFilter corsWebFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("http://localhost:3001"));
+		config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
 		config.setAllowedHeaders(Arrays.asList("Authorization","Content-Type"));
 		config.setExposedHeaders(Arrays.asList("Authorization"));

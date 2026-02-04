@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function AddPackage() {
   const [packageName, setPackageName] = useState("");
@@ -6,25 +6,59 @@ function AddPackage() {
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [destinationId, setDestinationId] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [destinationsLoading, setDestinationsLoading] = useState(true);
+  const [destinationsError, setDestinationsError] = useState("");
+
+  useEffect(() => {
+    // Fetch destinations for dropdown
+    setDestinationsLoading(true);
+    fetch("http://localhost:8080/destinations/all", {
+     
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Destinations fetched:", data);
+        if (Array.isArray(data)) {
+          setDestinations(data);
+        } else {
+          console.error("Destinations data is not an array:", data);
+          setDestinationsError("Failed to load destinations");
+        }
+        setDestinationsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching destinations:", err);
+        setDestinationsError("Failed to load destinations. Please check if the server is running.");
+        setDestinationsLoading(false);
+      });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8082/packages/add", {
+      const response = await fetch("http://localhost:8080/packages/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // 🔥 session ke liye IMPORTANT
+      
         body: JSON.stringify({
           packageName,
           cost,
           duration,
           description,
           destinationId,
+          imageUrl: imageUrl || null,
         }),
       });
 
@@ -40,6 +74,7 @@ function AddPackage() {
       setDuration("");
       setDescription("");
       setDestinationId("");
+      setImageUrl("");
 
     } catch (err) {
       console.error(err);
@@ -50,8 +85,24 @@ function AddPackage() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "40px auto" }}>
+    <div style={{ maxWidth: "500px", margin: "40px auto", padding: "20px" }}>
       <h2>Add Travel Package</h2>
+
+      {/* Debug info - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div style={{ fontSize: "12px", color: "#666", marginBottom: "10px", padding: "10px", background: "#f0f0f0", borderRadius: "5px" }}>
+          <strong>Debug Info:</strong><br />
+          Destinations loaded: {destinations.length}<br />
+          Loading: {destinationsLoading ? "Yes" : "No"}<br />
+          Error: {destinationsError || "None"}
+        </div>
+      )}
+
+      {destinations.length === 0 && !destinationsLoading && !destinationsError && (
+        <div style={{ color: "orange", marginBottom: "10px", fontSize: "14px" }}>
+          No destinations found. Please ensure destinations are added to the database.
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <input
@@ -65,9 +116,21 @@ function AddPackage() {
           type="number"
           placeholder="Cost"
           value={cost}
-          onChange={(e) => setCost(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || parseFloat(value) >= 0) {
+              setCost(value);
+            }
+          }}
+          min="0"
+          step="0.01"
           required
         />
+        {cost && parseFloat(cost) < 0 && (
+          <span style={{ color: "red", fontSize: "12px" }}>
+            Cost cannot be negative
+          </span>
+        )}
 
         <input
           placeholder="Duration (e.g. 5 days)"
@@ -84,12 +147,64 @@ function AddPackage() {
         />
 
         <input
-          type="number"
-          placeholder="Destination ID"
-          value={destinationId}
-          onChange={(e) => setDestinationId(e.target.value)}
-          required
+          type="url"
+          placeholder="Image URL (optional)"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
         />
+
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
+            Destination {destinations.length > 0 && `(${destinations.length} available)`}
+          </label>
+          {destinationsError && (
+            <div style={{ color: "red", fontSize: "12px", marginBottom: "5px" }}>
+              {destinationsError}
+            </div>
+          )}
+          <select
+            value={destinationId}
+            onChange={(e) => {
+              console.log("Selected destination ID:", e.target.value);
+              setDestinationId(e.target.value);
+            }}
+            required
+            disabled={destinationsLoading}
+            style={{ 
+              width: "100%", 
+              padding: "12px", 
+              marginBottom: "5px", 
+              borderRadius: "5px", 
+              border: destinationsError ? "1px solid red" : "1px solid #ccc", 
+              fontSize: "16px",
+              backgroundColor: destinationsLoading ? "#f5f5f5" : "white",
+              cursor: destinationsLoading ? "not-allowed" : "pointer",
+              minHeight: "44px",
+              zIndex: 1
+            }}
+          >
+            <option value="">
+              {destinationsLoading ? "Loading destinations..." : "Select Destination"}
+            </option>
+            {destinations.length > 0 ? (
+              destinations.map((dest) => {
+                const displayName = dest.dname || `Destination ${dest.destinationId}`;
+                return (
+                  <option key={dest.destinationId} value={dest.destinationId}>
+                    {displayName}
+                  </option>
+                );
+              })
+            ) : (
+              !destinationsLoading && <option value="" disabled>No destinations available</option>
+            )}
+          </select>
+          {destinations.length > 0 && (
+            <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
+              Click the dropdown to see {destinations.length} destination{destinations.length !== 1 ? 's' : ''}
+            </div>
+          )}
+        </div>
 
         <button type="submit" disabled={loading}>
           {loading ? "Saving..." : "Add Package"}

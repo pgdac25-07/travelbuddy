@@ -17,6 +17,14 @@ import AddTrips from "./components/AddTrips";
 //Customer Module
 import CustomerPackages from "./components/CustomerPackages";
 import CustomerTrips from "./components/CustomerTrips";
+import CustomerDashboard from "./components/CustomerDashboard";
+import PackageDetail from "./components/PackageDetail";
+import BookPackage from "./components/BookPackage";
+import CustomerFeedback from "./components/CustomerFeedback";
+import CompanyFeedback from "./components/CompanyFeedback";
+
+//Admin Module
+import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   return (
@@ -36,23 +44,11 @@ function App() {
             <Route path="/company/edit-package/:id" element={<EditPackage />} />
             <Route path="/company/add-trip" element={<AddTrips />} />
             <Route path="/customer/packages" element={<CustomerPackages />} />
-            <Route
-              path="/customer"
-              element={
-                <div style={{ textAlign: "center" }}>
-                  <h1>Customer Dashboard</h1>
-
-                  <a href="/customer/packages">View Packages</a>
-                </div>
-              }
-            />
-
-            <Route
-              path="/customer"
-              element={
-                <h1 style={{ textAlign: "center" }}>Customer Dashboard</h1>
-              }
-            />
+            <Route path="/customer" element={<CustomerDashboard />} />
+            <Route path="/customer/package/:packageId" element={<PackageDetail />} />
+            <Route path="/customer/book-package/:packageId" element={<BookPackage />} />
+            <Route path="/customer/feedback" element={<CustomerFeedback />} />
+            <Route path="/admin" element={<AdminDashboard />} />
 
             <Route
               path="/company"
@@ -69,9 +65,15 @@ function App() {
                   <div style={{ marginTop: "10px" }}>
                     <Link to="/company/packages">My Packages</Link>
                   </div>
+
+                  <div style={{ marginTop: "10px" }}>
+                    <Link to="/company/feedback">View Feedback</Link>
+                  </div>
                 </div>
               }
             />
+
+            <Route path="/company/feedback" element={<CompanyFeedback />} />
 
             {/* 404 page */}
             <Route
