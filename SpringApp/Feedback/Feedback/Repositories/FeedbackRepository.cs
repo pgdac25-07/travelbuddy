@@ -25,6 +25,20 @@ namespace FeedbackService.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Feedback>> GetFeedbackByCustomerAsync(int customerId)
+        {
+            return await _context.Feedbacks
+                .Where(f => f.CustomerId == customerId)
+                .ToListAsync();
+        }
+
+        public async Task<List<Feedback>> GetAllFeedbackAsync()
+        {
+            return await _context.Feedbacks
+                .OrderByDescending(f => f.CreatedAt)
+                .ToListAsync();
+        }
+
     }
 
 }

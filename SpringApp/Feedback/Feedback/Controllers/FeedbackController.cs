@@ -28,4 +28,20 @@ public class FeedbackController : ControllerBase
         var feedbacks = await _service.ViewFeedbackByBookingAsync(bookingId);
         return Ok(feedbacks);
     }
+
+    // View feedback by customer (traveller can see their own history)
+    [HttpGet("customer/{customerId}")]
+    public async Task<IActionResult> GetFeedbackByCustomer(int customerId)
+    {
+        var feedbacks = await _service.ViewFeedbackByCustomerAsync(customerId);
+        return Ok(feedbacks);
+    }
+
+    // View all feedback (for travel company/admin dashboards)
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllFeedback()
+    {
+        var feedbacks = await _service.ViewAllFeedbackAsync();
+        return Ok(feedbacks);
+    }
 }

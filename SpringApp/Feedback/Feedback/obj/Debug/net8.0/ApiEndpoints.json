@@ -1,6 +1,16 @@
 [
   {
     "ContainingType": "FeedbackController",
+    "Method": "GetAllFeedback",
+    "RelativePath": "api/Feedback/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FeedbackController",
     "Method": "GetFeedbackByBooking",
     "RelativePath": "api/Feedback/booking/{bookingId}",
     "HttpMethod": "GET",
@@ -9,6 +19,22 @@
     "Parameters": [
       {
         "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FeedbackController",
+    "Method": "GetFeedbackByCustomer",
+    "RelativePath": "api/Feedback/customer/{customerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
         "Type": "System.Int32",
         "IsRequired": true
       }
