@@ -23,6 +23,9 @@ public class RouterConfig {
 			   .route("Travel_Management", r-> r.path("/travelmgnt/**")
 					   .uri("http://localhost:8082"))
 //					   .uri("lb://Travel_Management"))
+			   .route("Admin", r-> r.path("/admin/**")
+					   .uri("http://localhost:8082"))
+//					   .uri("lb://Travel_Management"))
 			   .route("Feedback", r -> r
 					    .path("/api/Feedback/**")
 					    .uri("http://localhost:8083")

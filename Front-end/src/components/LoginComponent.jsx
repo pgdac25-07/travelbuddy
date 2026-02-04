@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [message, setMessage] = useState("");      // success or error message
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -28,6 +27,18 @@ function Login() {
 
       const data = await response.json(); // assuming backend returns JSON
       console.log(data);
+
+      // If backend returned a message, handle error / pending states first
+      if (data.message) {
+        if (data.message === "approval pending") {
+          alert("Your travel company account is pending admin approval.");
+        } else if (data.message === "invalid login") {
+          alert("Invalid username or password.");
+        } else {
+          alert(data.message);
+        }
+        return; // do not proceed with login/routing
+      }
 
       // Normalize role coming from backend (handles ROLE_ADMIN, role_admin, etc.)
       let rawRole = data.role || "";

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+// @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class AuthController {
 
     @Autowired
@@ -43,7 +43,16 @@ public class AuthController {
         user.setEmail(req.getEmail());
         user.setPassword(req.getPassword()); // plain text for now
         user.setRoleId(req.getRoleId());
-        user.setStatus("ACTIVE");
+
+        // For travel company registration (roleId = 2) keep the account in PENDING
+        // state until it is approved by the admin module.
+        // Admin (roleId = 3) and other roles are ACTIVE immediately.
+        if (req.getRoleId() == 2) { // 2 = TRAVEL_COMPANY
+            user.setStatus("PENDING");
+        } else {
+            // roleId = 3 => ADMIN, roleId = 1 => CUSTOMER, etc.
+            user.setStatus("ACTIVE");
+        }
 
         userRepository.save(user);
 
@@ -62,15 +71,24 @@ public class AuthController {
         // ❌ invalid username
         if (user == null) {
             return ResponseEntity.ok(
-                    Map.of("message", "invalid login")
-            );
+                    Map.of("message", "invalid login"));
         }
 
         // ❌ invalid password
         if (!user.getPassword().equals(req.getPassword())) {
             return ResponseEntity.ok(
-                    Map.of("message", "invalid login")
-            );
+                    Map.of("message", "invalid login"));
+        }
+
+        // ❌ travel company account not yet approved by admin
+        // roleId = 2 => TRAVEL_COMPANY (see RegisterRequest comment)
+        // Only allow login if status has been changed to APPROVED by the admin module.
+        if (user.getRoleId() != null
+                && user.getRoleId() == 2
+                && (user.getStatus() == null
+                        || !user.getStatus().equalsIgnoreCase("APPROVED"))) {
+            return ResponseEntity.ok(
+                    Map.of("message", "approval pending"));
         }
 
         // ✅ create session
@@ -78,8 +96,8 @@ public class AuthController {
         session.setAttribute("USER_ID", user.getUserId());
         session.setAttribute("ROLE_ID", user.getRoleId());
         session.setAttribute("USERNAME", user.getUsername());
-        
-     // ✅ ROLE JOIN
+
+        // ✅ ROLE JOIN
         Roles role = roleRepository
                 .findById(user.getRoleId())
                 .orElse(null);
@@ -90,8 +108,6 @@ public class AuthController {
         LoginResponse response = new LoginResponse(user, roleName);
         return ResponseEntity.ok(response);
     }
-
-
 
     // 🔹 LOGOUT
     @PostMapping("/logout")
